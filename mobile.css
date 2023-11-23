@@ -12,6 +12,10 @@
 
 
     }
+    a{
+        text-decoration: none;
+        color: unset;
+    }
     h4{
         display: flex;
         justify-content: center;
