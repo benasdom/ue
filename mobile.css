@@ -1,0 +1,91 @@
+@media (max-width:999px) {
+ 
+   
+    .headtext,.headtext1,.headtext2,.htextactive{
+        font-size: 50px;
+        display: flex;
+        padding-top: 0px;
+        align-items: left;
+        overflow: hidden;
+        justify-content: top;
+        height: 120px;
+
+
+    }
+    h4{
+        display: flex;
+        justify-content: center;
+    }
+    .head{
+        overflow: hidden;
+        height: 500px;
+    }
+    .content{
+        margin: auto;
+    }
+    .footer{
+        display: flex;
+        height: unset;
+        flex-direction: column;
+    }
+    .sec{
+        width: unset;
+        text-align: left;
+    }
+    .flinks{
+        display: flex;
+        padding-left: 5px;
+        justify-content: left;
+        align-items: center;
+        text-align: left;
+    }
+ 
+
+    .headtextb{
+        height: 20px;
+    }
+    .qleft{
+        width:unset;
+        overflow-x: hidden;
+
+    }
+    .qright{
+        width: 80%;
+        height:300px;
+        margin:auto;
+    }
+    .getst{
+        box-shadow: 
+        inset 0px 40px 0px var(--transpdoc), 
+        inset 0px -40px 0px var(--transpdoc),
+         inset -40px 0px 0px var(--transpdoc),
+          inset 40px 0px 0px var(--transpdoc);
+        filter: drop-shadow( 200px 0px 0px white, -200px 0px 0px white, 0px 200px 0px white, 0px 200px 0px white, );
+
+    }
+    .ui{
+        width:80%;
+    }
+    .gets{
+        width: unset;
+    }
+    .left{
+        line-height: 1.5;
+        width: max-content;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: left;
+    }
+    .right{
+        line-height: 1.5;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .right img{
+        width:200px;
+    }
+}
