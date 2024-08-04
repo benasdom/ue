@@ -53,6 +53,16 @@
         overflow-x: hidden;
 
     }
+    body{
+        background:
+        url(./img/icon-c.png),
+        linear-gradient(25deg,var(--back),rgb(45, 47, 49));
+        background-repeat: no-repeat, no-repeat;
+        background-attachment: fixed,fixed;
+        background-size: 900px,1000px;
+        background-position: top,center;
+    
+    }
     .qright{
         width: 80%;
         height:300px;
