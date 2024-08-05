@@ -1,6 +1,17 @@
 @media (max-width:999px) {
  
-   
+    body{
+        background:
+        url(./img/loggirl.svg),
+        radial-gradient(var(--back),var(--back2)),
+        repeating-conic-gradient(
+            from 75deg, rgb(0, 0, 0) 0deg 45deg, rgba(41, 44, 46, 0.375) 45deg 90deg);
+          background-blend-mode:difference;
+         background-repeat: no-repeat, no-repeat,repeat;
+         background-attachment: fixed,fixed;
+        background-size: 500px 500px,150% 200%,1em 1em ;
+        background-position: 80px 0px,center,0% 50%;
+    }    
     .headtext,.headtext1,.headtext2,.htextactive{
         font-size: 50px;
         display: flex;
@@ -26,6 +37,7 @@
     }
     .content{
         margin: auto;
+        width:unset
     }
     .footer{
         display: flex;
@@ -72,6 +84,7 @@
     }
     .gets{
         width: unset;
+         width:98%
     }
     .left{
         line-height: 1.5;
