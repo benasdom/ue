@@ -60,7 +60,7 @@
         linear-gradient(25deg,var(--back),rgb(45, 47, 49));
         background-repeat: no-repeat, no-repeat;
         background-attachment: fixed,fixed;
-        background-size: contain,cover;
+        background-size: cover,cover;
         background-position: top,center;
     
     }
