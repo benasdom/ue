@@ -56,11 +56,11 @@
     }
     body{
         background:
-        url(./img/icon-c.png) no-repeat center top fixed,
+        url(./img/icon-c.png) no-repeat fixed,
         linear-gradient(25deg,var(--back),rgb(45, 47, 49));
         background-repeat: no-repeat, no-repeat;
         background-attachment: fixed,fixed;
-        background-size: cover,cover;
+        background-size: 900px, cover;
         background-position: top,center;
     
     }
