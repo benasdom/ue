@@ -37,7 +37,11 @@
     }
     .content{
         margin: auto;
+<<<<<<< HEAD
         width:unset
+=======
+        width: unset;
+>>>>>>> f9809ce4de1954200b247995480f69effaf69f79
     }
     .footer{
         display: flex;
@@ -64,6 +68,16 @@
         width:unset;
         overflow-x: hidden;
 
+    }
+    body{
+        background:
+        url(./img/icon-c.png) no-repeat fixed,
+        linear-gradient(25deg,var(--back),rgb(45, 47, 49));
+        background-repeat: no-repeat, no-repeat;
+        background-attachment: fixed,fixed;
+        background-size: 900px, cover;
+        background-position: top,center;
+    
     }
     .qright{
         width: 80%;
