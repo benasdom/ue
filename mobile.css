@@ -83,9 +83,10 @@
 
     }
 
-.footer,.flinks,.ui{
+.footer,.para,.parat,.list li,.flinks,.ui,.qright{
     opacity: 1;
     transform: scale(1) translateY(0%);
+    visibility:visible;
     animation: none;
 }
 

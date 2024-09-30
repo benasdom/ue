@@ -75,6 +75,8 @@ h4{
     display: flex;
     justify-content: left;
     align-items: center;
+    animation:fades ease-in;
+    animation-timeline: view(0% 10%);
 }
 .feet{
     list-style: none;
