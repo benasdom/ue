@@ -31,6 +31,7 @@
     .footer{
         display: flex;
         height: unset;
+        padding-bottom: 50px;
         flex-direction: column;
     }
     .sec{
@@ -39,7 +40,8 @@
     }
     .flinks{
         display: flex;
-        padding-left: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
         justify-content: left;
         align-items: center;
         text-align: left;
@@ -68,6 +70,8 @@
         width: 80%;
         height:300px;
         margin:auto;
+        padding:0px;
+        padding-top:10px;
     }
     .getst{
         box-shadow: 
@@ -78,8 +82,27 @@
         filter: drop-shadow( 200px 0px 0px white, -200px 0px 0px white, 0px 200px 0px white, 0px 200px 0px white, );
 
     }
+
+.footer,.flinks,.ui{
+    opacity: 1;
+    transform: scale(1) translateY(0%);
+    animation: none;
+}
+
+    @keyframes fades{
+        30%,100%{
+            opacity:1;
+        transform: scale(1) translateY(0px) rotateY(0deg);
+        }
+        15%{
+            opacity:0;
+            transform:scale(0) translateY(100%) rotateY(90deg);
+        }
+    }
     .ui{
-        width:80%;
+        width:70%;
+        border:15px solid transparent;
+        border-radius: 50px;
     }
     .gets{
         width: unset;
