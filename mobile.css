@@ -102,8 +102,8 @@
     }
     .ui{
         width:70%;
-        border:15px solid transparent;
-        border-radius: 50px;
+        border:10px solid transparent;
+        border-radius: 100px;
     }
     .gets{
         width: unset;
