@@ -103,7 +103,7 @@
     .ui{
         width:70%;
         border:10px solid transparent;
-        border-radius: 100px;
+        border-radius:0px;
     }
     .gets{
         width: unset;
