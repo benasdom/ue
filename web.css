@@ -72,12 +72,17 @@ a{
 
 }
 h4{
-    height: 50px;
     padding: 10px;
     color:var(--textlarge);
     display: flex;
     justify-content: left;
     align-items: center;
+    margin-top:10px;
+    margin-bottom: 20px;
+    padding:10px;
+    border-radius: 10px;
+        -webkit-backdrop-filter: blur(5rem);
+    backdrop-filter: blur(5rem);
     animation:fades ease-in;
     animation-timeline: view(0% 10%);
 }
@@ -170,6 +175,7 @@ h4{
     min-width: 10%;
 
 }
+
 .icon{
     margin-right:10px;
     ;
