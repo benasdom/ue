@@ -31,7 +31,6 @@ window.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(raf);
   
   // Debugging: Log to console to confirm it's running
-  console.log('Lenis is active');
 });
    
  function activate(chosen){
