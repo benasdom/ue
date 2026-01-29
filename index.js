@@ -1,5 +1,6 @@
   
-    // Ensure Lenis runs after the library is loaded
+
+   // Ensure Lenis runs after the library is loaded
 window.addEventListener('DOMContentLoaded', () => {
 
   // 1. Add essential CSS via JS so it's guaranteed to be there
@@ -15,7 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // 2. Initialize Lenis
   const lenis = new Lenis({
-    duration: 1.2,
+    duration: 5.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true, // In 2026, 'smooth' is often 'smoothWheel'
     wheelMultiplier: 1,
@@ -31,8 +32,8 @@ window.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(raf);
   
   // Debugging: Log to console to confirm it's running
+  console.log('Lenis is active');
 });
-   
  function activate(chosen){
     document.querySelector('.headtext1').classList.contains("htextactive")?document.querySelector('.headtext1').classList.remove("htextactive"):false;
     document.querySelector('.headtext2').classList.contains("htextactive")?document.querySelector('.headtext2').classList.remove("htextactive"):false;
