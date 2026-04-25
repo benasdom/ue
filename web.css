@@ -37,7 +37,7 @@ a{
     url(./img/icon-c.png) no-repeat,
     linear-gradient(25deg,var(--back),rgb(38, 39, 41));
     background-position:0% 70%;
-    height: 555px;
+    height: 610px;
     display: flex;
     background-position: 0% 44%, center;
     background-attachment: fixed,scroll;
@@ -46,12 +46,27 @@ a{
     justify-content: space-around;
 
 }
+.icons img{
+    font-size: 10px;
+}
+.flinks{
+    font-size: 10px;
+    font-weight: 100;
+    letter-spacing: 1.4px;
+}
 .paystack,.cloudflare,.media{
-    height:20px;
-    width: 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    height:15px;
+    width: 15px;
+    padding:3px;
     border-radius: 50%;
+    background:rgba(255, 255, 255, 0.122);
    
 }
+
 .cloudflare{
     height:20px;
     width: 20px;
@@ -88,6 +103,7 @@ h4{
 .feet{
     list-style: none;
 }
+
 .start{
     height:100px;
     width:100%;
@@ -110,7 +126,10 @@ h4{
     opacity: 0;
     position: absolute;
     transition: opacity .6s ease-in-out;
-    text-shadow: 0px 10px 0px black;
+       background:linear-gradient(45deg,rgb(0, 90, 106) 20%,rgb(136, 0, 136) 90%);
+    background-clip: text;
+    color:transparent;
+    text-shadow: 0px -10px 0px rgb(255, 255, 255);
     transform:rotateY(90deg);
 
 }
@@ -240,8 +259,6 @@ img{
 display: flex;
  justify-content: space-around;
 flex-direction: row;
-backdrop-filter: blur(5rem);
--webkit-backdrop-filter: blur(5rem);
 width: fit-content;
 flex-wrap: nowrap;
 ;
@@ -286,9 +303,11 @@ flex-wrap: nowrap;
     justify-content: flex-end;
 }
 .list{
-    font-size: 15px;
+    font-size: 12px;
+    font-family: sans-serif;
     list-style:circle;
-    color: rgb(93, 112, 128);
+    line-height: 20px;
+    color: rgb(151, 172, 188);
     padding-bottom: 10px;
 }
 .list li{
@@ -297,6 +316,16 @@ flex-wrap: nowrap;
     opacity: 0;
     animation:fades ease-in;
     animation-timeline: view(0% 10%);
+}
+.edit{
+    padding:10px;
+    width:min-content;
+    -webkit-aspect-ratio: 1/1;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-clip: none;
+    color:black;
+    background:rgba(174, 221, 244, 0.1);
 }
 .quest{
     width:100%;
@@ -506,6 +535,9 @@ animation:fades ease-in;
 .parat{
     padding:10px;
     opacity:0;
+    color:transparent;
+    background:linear-gradient(45deg,rgb(255, 255, 255) 40%,rgb(66, 74, 99) 20%,rgb(230, 248, 255) 90%);
+    background-clip: text;
     transform:scale(0.4) translateY(100%) rotateY(90deg);
     animation:fades ease-in;
     animation-timeline: view(0% 10%);
