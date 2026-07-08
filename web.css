@@ -32,7 +32,7 @@ a{
     text-decoration:none;
 
 }
-.footer{
+footer{
     background:
     url(./img/icon-c.png) no-repeat,
     linear-gradient(25deg,var(--back),rgb(38, 39, 41));

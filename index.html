@@ -9,6 +9,201 @@
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 
     <script   src="index.js"></script>
+    <style>
+        /* ============================================================
+           Animated-SVG icon system + ambient background layer
+           Added without touching existing structural classes/vars.
+           Colors inherit from the site's own theme vars, with fallbacks.
+           ============================================================ */
+
+        .icon-svg { display: inline-block; vertical-align: -0.15em; overflow: visible; }
+
+        @keyframes ue-spin        { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes ue-sway        { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+        @keyframes ue-bob         { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+        @keyframes ue-pulse       { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .55; transform: scale(1.15); } }
+        @keyframes ue-blink       { 0%,90%,100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+        @keyframes ue-clap        { 0%,100% { transform: rotate(0deg); } 15% { transform: rotate(-16deg); } 30% { transform: rotate(0deg); } }
+        @keyframes ue-page-flip   { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(-1); } }
+        @keyframes ue-draw        { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+        @keyframes ue-drift       { 0%,100% { transform: translate(0,0); } 50% { transform: translate(6px,-4px); } }
+        @keyframes ue-ring-pulse  { 0%,100% { r: 5; opacity: .9; } 50% { r: 7; opacity: .4; } }
+        @keyframes ue-glow-drift  { 0% { transform: translate(0,0) scale(1); } 33% { transform: translate(3%,-4%) scale(1.08); } 66% { transform: translate(-4%,3%) scale(0.96); } 100% { transform: translate(0,0) scale(1); } }
+
+        .anim-spin  { transform-origin: 50% 50%; animation: ue-spin 6s linear infinite; }
+        .anim-sway  { transform-origin: 50% 100%; animation: ue-sway 2.6s ease-in-out infinite; }
+        .anim-bob   { animation: ue-bob 2.2s ease-in-out infinite; }
+        .anim-pulse { transform-origin: 50% 50%; animation: ue-pulse 2s ease-in-out infinite; }
+        .anim-blink { transform-origin: 50% 50%; animation: ue-blink 3.5s ease-in-out infinite; }
+        .anim-clap  { transform-origin: 10% 90%; animation: ue-clap 3s ease-in-out infinite; }
+        .anim-flip  { transform-origin: 50% 50%; animation: ue-page-flip 3.2s ease-in-out infinite; }
+        .anim-draw  { stroke-dasharray: 40; animation: ue-draw 2.4s ease-in-out infinite alternate; }
+        .anim-drift { animation: ue-drift 3.4s ease-in-out infinite; }
+        .anim-ring  { animation: ue-ring-pulse 2s ease-in-out infinite; }
+
+        /* Ambient decorative layer: large displays only, purely atmospheric */
+        .ue-ambience {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            display: none;
+        }
+        .ue-ambience .glow {
+            animation: ue-glow-drift 18s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+        .ue-ambience .glow.g2 { animation-duration: 24s; animation-direction: reverse; }
+        .ue-ambience .glow.g3 { animation-duration: 30s; }
+
+        .head, .quest, .questa, .footer { position: relative; }
+        .head > *, .quest > *, .questa > *, .footer > * { position: relative; z-index: 1; }
+
+        @media (min-width: 1024px) {
+            .ue-ambience { display: block; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .anim-spin, .anim-sway, .anim-bob, .anim-pulse, .anim-blink,
+            .anim-clap, .anim-flip, .anim-draw, .anim-drift, .anim-ring,
+            .ue-ambience .glow, .footer-brand .mark-spokes, .footer-brand .mark-nodes circle,
+            .footer-brand .mark-hub { animation: none !important; }
+        }
+
+        /* Footer icons: keep original .sec/.feet/.flinks/.icon/.media layout untouched,
+           just make sure the swapped-in inline SVGs size like the emoji/images they replaced. */
+        .footer .media svg,
+        .footer svg.media,
+        .footer svg.paystack,
+        .footer svg.cloudflare { display: inline-block; width: 20px; height: 20px; overflow: visible; vertical-align: middle; }
+    </style>
+<style>
+  /* ============================================================
+     UE FOOTER — fully self-contained, namespaced under .uef-*
+     No dependency on web.css / mobile.css. Reads theme vars
+     (--item, --doctext) if present on the page, else falls back
+     to its own defaults defined right here on .uef-root.
+     ============================================================ */
+
+  .uef-root {
+    --uef-item: var(--item);
+    --uef-doc: var(--doctext, #00cec9);
+    --uef-bg: var(--footer-bg, #131719);
+    --uef-text: var(--footer-text, #d7d9e6);
+    --uef-muted: var(--footer-muted, #8b8fa8);
+    --uef-border: rgba(255,255,255,0.08);
+
+    box-sizing: border-box;
+    background: var(--uef-bg);
+    color: var(--uef-text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 56px 6vw 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .uef-root *, .uef-root *::before, .uef-root *::after { box-sizing: border-box; }
+
+  .uef-glow {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(420px 260px at 8% 0%, color-mix(in srgb, var(--uef-item) 14%, transparent), transparent 70%),
+      radial-gradient(380px 240px at 92% 20%, color-mix(in srgb, var(--uef-doc) 12%, transparent), transparent 70%);
+  }
+
+  .uef-grid {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 1.2fr repeat(4, 1fr);
+    gap: 32px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--uef-border);
+  }
+
+  .uef-brand { display: flex; flex-direction: column; gap: 14px; }
+  .uef-mark { width: 46px; height: 46px; color: var(--uef-item); overflow: visible; }
+  .uef-mark-hub { fill: var(--uef-doc); }
+  .uef-mark-spokes { transform-origin: 24px 24px; animation: uef-spin 16s linear infinite; }
+  .uef-mark-spokes line { stroke: currentColor; stroke-width: 1.1; opacity: .55; }
+  .uef-mark-nodes circle { fill: currentColor; transform-origin: center; animation: uef-pulse 2.4s ease-in-out infinite; }
+  .uef-mark-nodes circle:nth-child(1) { animation-delay: 0s; }
+  .uef-mark-nodes circle:nth-child(2) { animation-delay: .3s; }
+  .uef-mark-nodes circle:nth-child(3) { animation-delay: .6s; }
+  .uef-mark-nodes circle:nth-child(4) { animation-delay: .9s; }
+  .uef-mark-nodes circle:nth-child(5) { animation-delay: 1.2s; }
+  .uef-mark-nodes circle:nth-child(6) { animation-delay: 1.5s; }
+
+  .uef-brand h3 { margin: 0; font-size: 19px; letter-spacing: .02em; color: #fff; }
+  .uef-brand p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--uef-muted); max-width: 32ch; }
+
+  .uef-col h4 {
+    margin: 0 0 14px; font-size: 13px; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--uef-muted); font-weight: 600;
+  }
+  .uef-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+
+  .uef-link {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--uef-text); text-decoration: none; font-size: 14px;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .uef-link:hover { color: #fff; transform: translateX(3px); }
+  .uef-link:hover .uef-icon svg { color: var(--uef-item); }
+
+  .uef-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; flex: none;
+  }
+  .uef-icon svg { width: 20px; height: 20px; overflow: visible; color: var(--uef-muted); transition: color .2s ease; }
+
+  .uef-bottom {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+    padding-top: 20px; font-size: 12.5px; color: var(--uef-muted);
+  }
+  .uef-bottom a { color: var(--uef-muted); text-decoration: none; }
+  .uef-bottom a:hover { color: var(--uef-text); }
+  .uef-bottom-links { display: flex; gap: 18px; }
+
+  /* ---- animations ---- */
+  @keyframes uef-spin  { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes uef-sway  { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+  @keyframes uef-bob   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes uef-pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .55; transform: scale(1.15); } }
+  @keyframes uef-blink { 0%,90%,100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+  @keyframes uef-clap  { 0%,100% { transform: rotate(0deg); } 15% { transform: rotate(-16deg); } 30% { transform: rotate(0deg); } }
+  @keyframes uef-flip  { 0%,100% { transform: scaleX(1); } 50% { transform: scaleX(-1); } }
+  @keyframes uef-draw  { from { stroke-dashoffset: 40; } to { stroke-dashoffset: 0; } }
+  @keyframes uef-drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(4px,-3px); } }
+
+  .uef-anim-spin  { transform-origin: 50% 50%; animation: uef-spin 6s linear infinite; }
+  .uef-anim-sway  { transform-origin: 50% 100%; animation: uef-sway 2.6s ease-in-out infinite; }
+  .uef-anim-bob   { animation: uef-bob 2.2s ease-in-out infinite; }
+  .uef-anim-pulse { transform-origin: 50% 50%; animation: uef-pulse 2s ease-in-out infinite; }
+  .uef-anim-blink { transform-origin: 50% 50%; animation: uef-blink 3.5s ease-in-out infinite; }
+  .uef-anim-clap  { transform-origin: 10% 90%; animation: uef-clap 3s ease-in-out infinite; }
+  .uef-anim-flip  { transform-origin: 50% 50%; animation: uef-flip 3.2s ease-in-out infinite; }
+  .uef-anim-draw  { stroke-dasharray: 40; animation: uef-draw 2.4s ease-in-out infinite alternate; }
+  .uef-anim-drift { animation: uef-drift 3.4s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .uef-root [class*="uef-anim-"], .uef-mark-spokes, .uef-mark-nodes circle {
+      animation: none !important;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .uef-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .uef-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 520px) {
+    .uef-root { padding: 40px 6vw 20px; }
+    .uef-grid { grid-template-columns: 1fr; gap: 26px; }
+    .uef-bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
 </head>
 <body>
 <div class="page">
@@ -17,14 +212,24 @@
         <div class="head1 ">
             <div class="headtexta">
                 <div class="htext">
-                    UE-builds ⚙️
+                    UE-builds 
+                       <svg class="icon-svg anim-spin" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 8.4a3.6 3.6 0 100 7.2 3.6 3.6 0 000-7.2z" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/>
+                        <path d="M12 2.5v2.4M12 19.1v2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7" stroke="var(--item, #6c5ce7)" stroke-width="1.6" stroke-linecap="round"/>
+                    </svg>
 
                 </div>
 
             </div>
             <div class="headtext">
                 <div class="headtext1 htextactive">
-                   🕸️ Hi there !
+                       <svg class="icon-svg anim-pulse" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9" stroke="var(--doctext, #00cec9)" stroke-width="1.2" opacity="0.5"/>
+                        <circle cx="12" cy="12" r="5.5" stroke="var(--doctext, #00cec9)" stroke-width="1.2" opacity="0.7"/>
+                        <circle cx="12" cy="12" r="2" fill="var(--doctext, #00cec9)"/>
+                        <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4" stroke="var(--doctext, #00cec9)" stroke-width="0.8" opacity="0.4"/>
+                    </svg>
+                    Hi there !
                 </div>
                 <div class="headtext2">
                    &nbsp to Unity Elites
@@ -39,55 +244,55 @@
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uesales.png" /></div><div class="text">👜 ue-commerce</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uesales.png" /></div><div class="text"><svg class="icon-svg anim-sway" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8V6a5 5 0 0110 0v2" stroke="var(--item, #6c5ce7)" stroke-width="1.6" stroke-linecap="round"/><rect x="4" y="8" width="16" height="12" rx="2" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/></svg> ue-commerce</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uemovies.png" /></div><div class="text">🎬 ue-movies</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uemovies.png" /></div><div class="text"><svg class="icon-svg anim-clap" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/><path d="M3 9l2-5 4 3-2 2H3zM9 9l2-5 4 3-2 2H9zM15 9l2-5 3 2-1 3h-4z" stroke="var(--item, #6c5ce7)" stroke-width="1.4" stroke-linejoin="round"/></svg> ue-movies</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uepasco.png" /></div><div class="text">📖 ue-pasco</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uepasco.png" /></div><div class="text"><svg class="icon-svg anim-flip" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 6c-2-1.5-5-2-8-1v13c3-1 6-.5 8 1 2-1.5 5-2 8-1V5c-3-1-6-.5-8 1z" stroke="var(--item, #6c5ce7)" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6v13" stroke="var(--item, #6c5ce7)" stroke-width="1.2"/></svg> ue-pasco</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uesales.png" /></div><div class="text">👜 ue-commerce</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uesales.png" /></div><div class="text"><svg class="icon-svg anim-sway" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8V6a5 5 0 0110 0v2" stroke="var(--item, #6c5ce7)" stroke-width="1.6" stroke-linecap="round"/><rect x="4" y="8" width="16" height="12" rx="2" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/></svg> ue-commerce</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uemovies.png" /></div><div class="text">🎬 ue-movies</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uemovies.png" /></div><div class="text"><svg class="icon-svg anim-clap" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/><path d="M3 9l2-5 4 3-2 2H3zM9 9l2-5 4 3-2 2H9zM15 9l2-5 3 2-1 3h-4z" stroke="var(--item, #6c5ce7)" stroke-width="1.4" stroke-linejoin="round"/></svg> ue-movies</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uepasco.png" /></div><div class="text">📖 ue-pasco</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uepasco.png" /></div><div class="text"><svg class="icon-svg anim-flip" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 6c-2-1.5-5-2-8-1v13c3-1 6-.5 8 1 2-1.5 5-2 8-1V5c-3-1-6-.5-8 1z" stroke="var(--item, #6c5ce7)" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6v13" stroke="var(--item, #6c5ce7)" stroke-width="1.2"/></svg> ue-pasco</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uesales.png" /></div><div class="text">👜 ue-commerce</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uesales.png" /></div><div class="text"><svg class="icon-svg anim-sway" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8V6a5 5 0 0110 0v2" stroke="var(--item, #6c5ce7)" stroke-width="1.6" stroke-linecap="round"/><rect x="4" y="8" width="16" height="12" rx="2" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/></svg> ue-commerce</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uemovies.png" /></div><div class="text">🎬 ue-movies</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uemovies.png" /></div><div class="text"><svg class="icon-svg anim-clap" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/><path d="M3 9l2-5 4 3-2 2H3zM9 9l2-5 4 3-2 2H9zM15 9l2-5 3 2-1 3h-4z" stroke="var(--item, #6c5ce7)" stroke-width="1.4" stroke-linejoin="round"/></svg> ue-movies</div></div>
                 <div href="#" onmouseover="return activate(this)" onmouseleave="return deactivate()" class="item"><div class="options"><a href="https://benasdom.github.io/documentation/" target="_blank" class="more"><svg class="docsvg" viewBox="0 0 20 20" fill="--doctext" width="20px" height="20px" role="img">
             <title>docs</title>
             <path d="M3.415 10L10 13.293 16.585 10l3.398 1.699L10 16.69.017 11.7 3.415 10z" fill="var(--item)"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.651l-7.3 3.65 7.3 3.65 7.3-3.65-7.3-3.65zm0-1.341l9.983 4.99L10 13.293.017 8.3 10 3.31z" fill="var(--doctext)">
-            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uepasco.png" /></div><div class="text">📖 ue-pasco</div></div>
+            </path></svg><span>docs</span></a></div><div class="imgbox"><img class="image" src="./img/uepasco.png" /></div><div class="text"><svg class="icon-svg anim-flip" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 6c-2-1.5-5-2-8-1v13c3-1 6-.5 8 1 2-1.5 5-2 8-1V5c-3-1-6-.5-8 1z" stroke="var(--item, #6c5ce7)" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 6v13" stroke="var(--item, #6c5ce7)" stroke-width="1.2"/></svg> ue-pasco</div></div>
              
             </div>
         </div>
     <div class="quest">
         <div class="qleft">
-            <p class="para"> - What we do <span class="edit">✊🏽</span> -</p>
+            <p class="para"> - What we do <span><svg class="icon-svg anim-ring" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="12" r="5" fill="var(--item, #6c5ce7)"/><circle cx="15" cy="12" r="5" fill="var(--doctext, #00cec9)" fill-opacity="0.75"/></svg></span> -</p>
             <p class="parat">
-                Do you need a professional website <span class="edit">🤔</span>?
+                Do you need a professional website <span class="edit"><svg class="icon-svg anim-pulse" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="var(--item, #6c5ce7)" stroke-width="1.6"/><path d="M9.5 9.2a2.5 2.5 0 114 2c-.6.5-1.5 1-1.5 2.1" stroke="var(--item, #6c5ce7)" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="var(--item, #6c5ce7)"/></svg></span>?
                 <ul class="list">
                     <li>We create responsive and interactive designs that keep users engaged</li>
                     <li>We use the best UI/UX practices to get you the best </li>
@@ -97,8 +302,11 @@
             </p>
             <div class="gets" >
                 <a class="getst"  href="https://benasdom.github.io/ue-clientInputs/" target="_blank">
-                    Get started
-
+                <div>Get Started</div> &nbsp;
+   <svg class="getst-svg" width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+                        <circle cx="17" cy="17" r="15.5" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 5" class="anim-spin" style="animation-duration:10s"/>
+                        <path d="M13 11l7 6-7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </a>
             </div>
     
@@ -139,53 +347,159 @@
         <img class="phone" src="./img/shown.png"/>
     </div>
     </div>
-    <div class="start"><a  href="https://benasdom.github.io/ue-clientInputs/" target="_blank" class="getstarted">I need a website</a></div>
-</div>
+    <div class="start"><a  href="https://benasdom.github.io/ue-clientInputs/" target="_blank" class="getstarted">I need a website &nbsp;
+           <svg class="getst-svg" width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+                        <circle cx="17" cy="17" r="15.5" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 5" class="anim-spin" style="animation-duration:10s"/>
+                        <path d="M13 11l7 6-7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+    </a>
 
-    <div class="footer">
-        <div class="sec">
-            <h4>Our Links</h4>
-            <ul class="feet">
-                <li><a class="flinks" target="_blank" href="https://benasdom.github.io/documentation/"><div class="icon"><span class="media">📃</span></div>Documentation</a></li>
-                <li><a class="flinks" target="_blank" href="https://benasdom.github.io/uepasco/"><div class="icon"><img class="media" src="./img/uepasco.png" alt="" srcset=""></div>past questions</a></li>
-                <li><a class="flinks" target="_blank" href="#"><div class="icon"><span class="media">🛍️</span></div>commerce</a></li>
-                <li><a class="flinks" target="_blank" href="#"><div class="icon"><span class="media">🎬</span></div>movies</a></li>
-                <li><a class="flinks" target="_blank" href="#"><div class="icon"><span class="media">🎮</span></div>Games</a></li>
-                <li><a class="flinks" target="_blank" href="#"><div class="icon"><span class="media">☁️</span></div>webhosting</a></li>
-            </ul>
-        </div>
-     <div class="sec">
-            <h4>Social Media</h4>
-            <ul class="feet">
-                <li><a class="flinks" target="_blank" href="https://www.youtube.com/@unityelites5682"><span class="icon"><img src=".//img/youtube.ico" class="media"/></span>Youtube</a></li>
-                <li><a class="flinks" target="_blank" href="#"><span class="icon"><img src=".//img/fb.png" class="media"/></span>Facebook</a></li>
-                <li><a class="flinks" target="_blank" href="#"><span class="icon"><img src=".//img/ig.png" class="media"/></span>Instagram</a></li>
-                <li><a class="flinks" target="_blank" href="#"><span class="icon"><img src=".//img/whats.png" class="media"/></span>Whatsapp</a></li>
-                <li><a class="flinks" target="_blank" href="#"><span class="icon"><img src=".//img/tiktok.png" class="media"/></span>Tiktok</a></li>
-                <li><a class="flinks" target="_blank" href="#"><span class="icon"><img src=".//img/x.png" class="media"/></span>X/Twitter</a></li>
-                    <li><a class="flinks" target="_blank" href="#"><span class="icon"><img src=".//img/threads.png" class="media"/></span>Threads</a></li>
-            
-        </div>     <div class="sec">
-            <h4>Additional Links</h4>
-            <ul class="feet">
-                <li><a class="flinks" target="_blank" href="http://t.me/ue_pasco_bot/ue_pasco"><span class='icon'><div class="media">🤖</div></span> uelearn bot</a></li>
-            </ul>
-        </div>     <div class="sec">
-            <h4>Tools</h4>
-            <ul class="feet">
-                <li><a class="flinks" target="_blank" href="github.com/unityelites">
-                    <span class="icon">
-                        <svg viewBox="0 0 20 20" fill="none" width="20px" height="20px" role="img"><title>Github-icon</title><path d="M10 0C4.475 0 0 4.475 0 10a9.994 9.994 0 006.838 9.488c.5.087.687-.213.687-.476 0-.237-.013-1.024-.013-1.862-2.512.463-3.162-.612-3.362-1.175-.113-.287-.6-1.175-1.025-1.412-.35-.188-.85-.65-.013-.663.788-.013 1.35.725 1.538 1.025.9 1.512 2.337 1.087 2.912.825.088-.65.35-1.088.638-1.338-2.225-.25-4.55-1.112-4.55-4.937 0-1.088.387-1.987 1.025-2.688-.1-.25-.45-1.274.1-2.65 0 0 .837-.262 2.75 1.026a9.28 9.28 0 012.5-.338c.85 0 1.7.112 2.5.337 1.912-1.3 2.75-1.024 2.75-1.024.55 1.375.2 2.4.1 2.65.637.7 1.025 1.587 1.025 2.687 0 3.838-2.337 4.688-4.562 4.938.362.312.675.912.675 1.85 0 1.337-.013 2.412-.013 2.75 0 .262.188.574.688.474A10.016 10.016 0 0020 10c0-5.525-4.475-10-10-10z" fill="var(--docs)"></path></svg>
-                    </span>
-                    Git-hub</a></li>
-                <li><a class="flinks" target="_blank" href="#"><span class="icon"><img src="./img/paystack.png" class="paystack"/></span>Paystack</a></li>
-                <li><a class="flinks" target="_blank" href="cloudflare.com">
-                    <span class="icon">
-                    <img src="./img/cloudflare.png" class="cloudflare" height="20px" width="20px"/>
-                     </span>
-                    Cloudflare</a></li>
-       
-            </ul>
-        </div>    </div>
+    </div>
+</div><footer class="uef-root">
+  <div class="uef-glow"></div>
+
+  <div class="uef-grid">
+
+    <div class="uef-brand">
+     
+      <h3>Unity&nbsp;Elites</h3>
+      <p>We design and build responsive websites, e‑commerce, and custom web tools — front‑end to hosting.</p>
+    </div>
+
+    <div class="uef-col">
+      <h4>Our Links</h4>
+      <ul>
+        <li><a class="uef-link" target="_blank" href="https://benasdom.github.io/documentation/">
+          <span class="uef-icon"><svg class="uef-anim-draw" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3.4 10 10 13.3 16.6 10l3.4 1.7L10 16.7.02 11.7 3.4 10z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10 4.65 2.7 8.3 10 12l7.3-3.7L10 4.65Zm0-1.34 10 5-10 5-10-5 10-5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg></span>Documentation</a></li>
+
+        <li><a class="uef-link" target="_blank" href="https://benasdom.github.io/uepasco/">
+          <span class="uef-icon"><svg class="uef-anim-flip" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 6c-2-1.5-5-2-8-1v13c3-1 6-.5 8 1 2-1.5 5-2 8-1V5c-3-1-6-.5-8 1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 6v13" stroke="currentColor" stroke-width="1.2"/>
+          </svg></span>Past Questions</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-sway" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 8V6a5 5 0 0110 0v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <rect x="4" y="8" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+          </svg></span>Commerce</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-clap" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="9" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M3 9l2-5 4 3-2 2H3zM9 9l2-5 4 3-2 2H9zM15 9l2-5 3 2-1 3h-4z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg></span>Movies</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-blink" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="7" width="18" height="11" rx="4" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M7 12.5h3M8.5 11v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="16" cy="11.5" r="1" fill="currentColor"/>
+            <circle cx="18" cy="13.5" r="1" fill="currentColor"/>
+          </svg></span>Games</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-drift" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6.5 17a4 4 0 01-.5-8 5 5 0 019.6-1.5A4.5 4.5 0 0118.5 17h-12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg></span>Web Hosting</a></li>
+      </ul>
+    </div>
+
+    <div class="uef-col">
+      <h4>Social Media</h4>
+      <ul>
+        <li><a class="uef-link" target="_blank" href="https://www.youtube.com/@unityelites5682">
+          <span class="uef-icon"><svg class="uef-anim-pulse" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="5.5" width="20" height="13" rx="4" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M10 9.2l5 2.8-5 2.8V9.2Z" fill="currentColor"/>
+          </svg></span>Youtube</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-bob" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M14.5 9H13a1.8 1.8 0 00-1.8 1.8v2.4H14l-.5 3H11.2V20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></span>Facebook</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-pulse" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="17" cy="7" r="1" fill="currentColor"/>
+          </svg></span>Instagram</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-sway" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3.5C7.3 3.5 3.5 7.3 3.5 12c0 1.7.5 3.3 1.35 4.65L3.5 20.5l3.95-1.3A8.6 8.6 0 0012 20.5c4.7 0 8.5-3.8 8.5-8.5s-3.8-8.5-8.5-8.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M9 8.9c.15-.4.35-.4.55-.4h.5c.15 0 .3.05.4.3.15.35.5 1.15.55 1.25.05.1.05.2 0 .35-.05.15-.1.2-.2.35-.1.1-.2.2-.1.4.4.7.9 1.2 1.6 1.55.15.1.25.1.35-.05.1-.1.45-.55.6-.7.1-.15.25-.1.4-.05.15.05 1 .5 1.2.6.15.1.3.1.35.2.05.15.05.75-.2 1.15-.25.4-.85.65-1.4.7-.45.05-.85-.05-1.8-.4-1.5-.6-2.45-2-2.55-2.15-.1-.1-.6-.8-.6-1.5s.35-1.05.45-1.2Z" fill="currentColor"/>
+          </svg></span>Whatsapp</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-bob" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M15.5 3c.4 2.1 1.9 3.5 4 3.6V9c-1.5 0-2.8-.5-4-1.3v6.4a5 5 0 11-4.4-5v2.5a2.5 2.5 0 102 2.4V3h2.4Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+          </svg></span>Tiktok</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-pulse" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4.5 4.5l15 15M19.5 4.5l-15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg></span>X / Twitter</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-draw" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3.5c4.3 0 7.2 2.6 7.2 6.5 0 3.1-1.9 4.8-4.1 5.3.5.6.7 1.3.7 2.3 0 2.3-1.9 4-4.8 4-3.7 0-6.2-2.2-6.2-5.9 0-1.7.6-3.1 1.9-4.1M10.8 9.8c1.9 0 3.1 1.1 3.1 2.9 0 1.9-1.4 3.1-3.4 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          </svg></span>Threads</a></li>
+      </ul>
+    </div>
+
+    <div class="uef-col">
+      <h4>Additional Links</h4>
+      <ul>
+        <li><a class="uef-link" target="_blank" href="http://t.me/ue_pasco_bot/ue_pasco">
+          <span class="uef-icon"><svg class="uef-anim-blink" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="4" y="7" width="16" height="12" rx="3" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M12 7V4M9 4h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <rect x="8" y="11" width="2.5" height="3" rx="1" fill="currentColor"/>
+            <rect x="13.5" y="11" width="2.5" height="3" rx="1" fill="currentColor"/>
+          </svg></span>UE Learn Bot</a></li>
+      </ul>
+    </div>
+
+    <div class="uef-col">
+      <h4>Tools</h4>
+      <ul>
+        <li><a class="uef-link" target="_blank" href="https://github.com/unityelites">
+          <span class="uef-icon"><svg class="uef-anim-sway" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 0C4.475 0 0 4.475 0 10a9.994 9.994 0 006.838 9.488c.5.087.687-.213.687-.476 0-.237-.013-1.024-.013-1.862-2.512.463-3.162-.612-3.362-1.175-.113-.287-.6-1.175-1.025-1.412-.35-.188-.85-.65-.013-.663.788-.013 1.35.725 1.538 1.025.9 1.512 2.337 1.087 2.912.825.088-.65.35-1.088.638-1.338-2.225-.25-4.55-1.112-4.55-4.937 0-1.088.387-1.987 1.025-2.688-.1-.25-.45-1.274.1-2.65 0 0 .837-.262 2.75 1.026a9.28 9.28 0 012.5-.338c.85 0 1.7.112 2.5.337 1.912-1.3 2.75-1.024 2.75-1.024.55 1.375.2 2.4.1 2.65.637.7 1.025 1.587 1.025 2.687 0 3.838-2.337 4.688-4.562 4.938.362.312.675.912.675 1.85 0 1.337-.013 2.412-.013 2.75 0 .262.188.574.688.474A10.016 10.016 0 0020 10c0-5.525-4.475-10-10-10z" fill="currentColor"/>
+          </svg></span>Git-hub</a></li>
+
+        <li><a class="uef-link" target="_blank" href="#">
+          <span class="uef-icon"><svg class="uef-anim-draw" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="5.5" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M3 9.5h18" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M6.5 14.5h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg></span>Paystack</a></li>
+
+        <li><a class="uef-link" target="_blank" href="https://cloudflare.com">
+          <span class="uef-icon"><svg class="uef-anim-drift" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M17.4 16.2a3.6 3.6 0 000-7.2 5.4 5.4 0 00-10.4-1.4A4.2 4.2 0 007.8 16.2h9.6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg></span>Cloudflare</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="uef-bottom">
+    <div>© <span id="uef-year"></span> Unity Elites. All rights reserved.</div>
+    <div class="uef-bottom-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="https://benasdom.github.io/ue-clientInputs/" target="_blank">Get Started</a>
+    </div>
+  </div>
+</footer>
+<script>document.getElementById('uef-year').textContent = new Date().getFullYear();</script>
+
 </body>
 </html>
