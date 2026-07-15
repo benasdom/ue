@@ -1,0 +1,94 @@
+/* Shared styles for Unity Elites legal/info pages.
+   Uses the same --item / --doctext variables as the main site so these
+   pages inherit brand colors automatically if web.css is also loaded.
+   Falls back to sensible defaults if it isn't. */
+
+:root {
+  --item: #6c5ce7;
+  --doctext: #00cec9;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0f1113;
+  color: #d7d9e6;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.65;
+}
+
+.ue-legal-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 64px 6vw 40px;
+}
+
+.ue-legal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--doctext);
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+.ue-legal-back:hover { text-decoration: underline; }
+
+.ue-legal-wrap h1 {
+  font-size: 28px;
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.ue-legal-updated {
+  font-size: 13px;
+  color: #8b8fa8;
+  margin: 0 0 36px;
+}
+
+.ue-legal-wrap h2 {
+  font-size: 18px;
+  color: var(--item);
+  margin: 34px 0 10px;
+}
+
+.ue-legal-wrap p, .ue-legal-wrap li {
+  font-size: 15px;
+  color: #c7c9d9;
+}
+
+.ue-legal-wrap ul {
+  padding-left: 20px;
+}
+
+.ue-legal-wrap a.inline-link {
+  color: var(--doctext);
+  text-decoration: none;
+}
+.ue-legal-wrap a.inline-link:hover { text-decoration: underline; }
+
+.ue-legal-wrap strong { color: #fff; }
+
+.ue-contact-box {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+}
+
+.ue-team-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 18px 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+}
+
+.ue-team-card .mark {
+  width: 36px; height: 36px; flex: none; color: var(--item);
+}
