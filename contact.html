@@ -1,41 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact — Unity Elites</title>
-<link rel="shortcut icon" href="img/logo.jpg" type="image/jpg">
-<link rel="stylesheet" href="web.css">
-<link rel="stylesheet" href="mobile.css">
-<link rel="stylesheet" href="_shared.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 1. TITLE TAG: More descriptive and includes relevant keywords -->
+    <title>Contact Us | Unity Elites Web Design &amp; Development</title>
+
+    <!-- 2. META DESCRIPTION: Clear, concise, and includes call-to-action -->
+    <meta name="description" content="Contact Unity Elites for web design, development, and hosting services. Email us, use our client intake form, or connect via Telegram. Get a free quote today!">
+
+    <!-- 3. CANONICAL TAG: Prevents duplicate content issues -->
+    <link rel="canonical" href="https://unityelites.com/contact.html">
+
+    <!-- 4. ROBOTS META TAG: Explicitly allows indexing and following links -->
+    <meta name="robots" content="index, follow">
+
+    <!-- 5. OPEN GRAPH (OG) TAGS: Enhances social media sharing -->
+    <meta property="og:title" content="Contact Us | Unity Elites Web Design &amp; Development">
+    <meta property="og:description" content="Reach Unity Elites for web design, development, and hosting services. Get a free quote or start your project today!">
+    <meta property="og:url" content="https://unityelites.com/contact.html">
+    <meta property="og:type" content="website">
+    <!-- IMPORTANT: Add an og:image for a rich preview when shared -->
+    <!-- <meta property="og:image" content="https://unityelites.com/img/og-image.jpg"> -->
+    <!-- <meta property="og:image:alt" content="Unity Elites Logo and Brand"> -->
+
+    <!-- 6. FAVICONS & THEME COLOR: Good for user experience and branding -->
+    <link rel="icon" href="img/favicon.ico" sizes="any">
+    <link rel="icon" href="img/logo32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="img/logo192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="img/logo180.png">
+    <meta name="theme-color" content="#131719">
+
+    <!-- 7. CSS: Keep it minimal for speed, prioritize critical CSS -->
+    <link rel="stylesheet" href="web.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="_shared.css">
+    <style>
+    .contact-method {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.contact-method:last-child {
+    border-bottom: none;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+</style>
+
+    <!-- 8. JSON-LD: STRUCTURED DATA (The game-changer for "best" SEO) -->
+    <!-- ContactPage schema for better search results -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact Us",
+            "description": "Contact Unity Elites for web design, development, and hosting services. Email us, use our client intake form, or connect via Telegram.",
+            "url": "https://unityelites.com/contact.html",
+            "inLanguage": "en",
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "Unity Elites",
+                "url": "https://unityelites.com/"
+            }
+        }
+    </script>
+    <!-- BreadcrumbList structured data for better search result snippets -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://unityelites.com/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Contact Us",
+                    "item": "https://unityelites.com/contact.html"
+                }
+            ]
+        }
+    </script>
+    <!-- Organization schema for rich snippets in search results -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Unity Elites",
+            "url": "https://unityelites.com",
+            "logo": "https://unityelites.com/img/logo192.png",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "info@unityelites.com",
+                "contactType": "customer service",
+                "availableLanguage": ["English"]
+            },
+            "sameAs": [
+                "http://t.me/ue_pasco_bot/ue_pasco"
+            ]
+        }
+    </script>
+    <!-- FAQ schema for the contact options (optional but helpful) -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "How can I contact Unity Elites?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "You can contact Unity Elites via email at info@unityelites.com, through our client intake form for new projects, or via our Telegram bot at t.me/ue_pasco_bot/ue_pasco."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What services does Unity Elites offer?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Unity Elites offers web design, front-end and back-end development, e-commerce setup, and hosting-related support."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How long does it take to get a response?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "We usually reply within a day or two, depending on the complexity of your inquiry."
+                    }
+                }
+            ]
+        }
+    </script>
 </head>
 <body>
-<div class="ue-legal-wrap">
-  <a class="ue-legal-back" href="index.html">&larr; Back to Unity Elites</a>
-  <h1>Contact Us</h1>
-  <p class="ue-legal-updated">We usually reply within a day or two</p>
+    <!-- 9. Use semantic HTML5 elements for better structure -->
+    <main class="ue-legal-wrap">
+        <!-- 10. Improved Internal Linking: Descriptive anchor text -->
+        <nav aria-label="Breadcrumb">
+            <a class="ue-legal-back" href="index.html" aria-label="Return to the Unity Elites homepage">
+                &larr; Back to Unity Elites Homepage
+            </a>
+        </nav>
 
-  <p>Have a project, a question about one of our tools, or feedback on the site? Reach us through any of the channels below.</p>
+        <h1>Contact Us</h1>
+        <p class="ue-legal-updated">We usually reply within a day or two</p>
 
-  <div class="ue-contact-box">
-    <p style="margin:0 0 10px; color:#fff; font-weight:600;">Email</p>
-    <p style="margin:0 0 20px;"><a class="inline-link" href="mailto:info@unityelites.com">info@unityelites.com</a></p>
+        <p>Have a project, a question about one of our tools, or feedback on the site? Reach us through any of the channels below.</p>
 
-    <p style="margin:0 0 10px; color:#fff; font-weight:600;">New Project / Client Intake</p>
-    <p style="margin:0 0 20px;">
-      For website projects, use our
-      <a class="inline-link" href="https://benasdom.github.io/ue-clientInputs/" target="_blank" rel="noopener">client intake form</a>
-      — it's the fastest way to get a quote or start a build.
-    </p>
+        <!-- 11. Use section for contact methods with clear structure -->
+        <section aria-labelledby="contact-methods-heading">
+            <h2 id="contact-methods-heading" class="visually-hidden">Ways to Contact Us</h2>
 
-    <p style="margin:0 0 10px; color:#fff; font-weight:600;">Telegram</p>
-    <p style="margin:0;">
-      <a class="inline-link" href="http://t.me/ue_pasco_bot/ue_pasco" target="_blank" rel="noopener">UE Learn Bot</a>
-    </p>
-  </div>
+            <div class="ue-contact-box">
+                <!-- Email contact method -->
+                <div class="contact-method">
+                    <p style="margin:0 0 10px; color:#fff; font-weight:600;">
+                        <span aria-hidden="true">✉️</span> Email
+                    </p>
+                    <p style="margin:0 0 20px;">
+                        <a class="inline-link" href="mailto:info@unityelites.com?subject=Inquiry%20from%20Unity%20Elites%20Contact%20Page">
+                            info@unityelites.com
+                        </a>
+                    </p>
+                </div>
 
-  <h2>Prefer to browse first?</h2>
-  <p>Check our <a class="inline-link" href="https://benasdom.github.io/documentation/" target="_blank" rel="noopener">documentation</a> for details on how our tools and services work before reaching out.</p>
-</div>
+                <!-- Client Intake / New Project method -->
+                <div class="contact-method">
+                    <p style="margin:0 0 10px; color:#fff; font-weight:600;">
+                        <span aria-hidden="true">🚀</span> New Project / Client Intake
+                    </p>
+                    <p style="margin:0 0 20px;">
+                        For website projects, use our
+                        <a class="inline-link" href="https://benasdom.github.io/ue-clientInputs/" target="_blank" rel="noopener noreferrer">
+                            client intake form
+                        </a>
+                        — it's the fastest way to get a quote or start a build.
+                    </p>
+                </div>
+
+                <!-- Telegram method -->
+                <div class="contact-method">
+                    <p style="margin:0 0 10px; color:#fff; font-weight:600;">
+                        <span aria-hidden="true">💬</span> Telegram
+                    </p>
+                    <p style="margin:0;">
+                        <a class="inline-link" href="http://t.me/ue_pasco_bot/ue_pasco" target="_blank" rel="noopener noreferrer">
+                            UE Learn Bot
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12. Additional resources section with improved structure -->
+        <section aria-labelledby="resources-heading">
+            <h2 id="resources-heading">Prefer to Browse First?</h2>
+            <p>
+                Check our 
+                <a class="inline-link" href="https://benasdom.github.io/documentation/" target="_blank" rel="noopener noreferrer">
+                    documentation
+                </a> 
+                for details on how our tools and services work before reaching out.
+            </p>
+        </section>
+
+        <!-- 13. Business hours / response time -->
+        <section aria-labelledby="response-heading">
+            <h2 id="response-heading">Response Times</h2>
+            <ul>
+                <li><strong>Email:</strong> Usually within 24-48 hours</li>
+                <li><strong>Client Intake Form:</strong> Within 1-2 business days</li>
+                <li><strong>Telegram Bot:</strong> Immediate automated responses</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- JavaScript: Keep it simple and fast -->
+    <script>
+        // Update the date dynamically if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add dynamic content here if needed
+            console.log('Contact page loaded successfully');
+        });
+    </script>
 </body>
 </html>

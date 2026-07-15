@@ -1,48 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About — Unity Elites</title>
-<link rel="shortcut icon" href="img/logo.jpg" type="image/jpg">
-<link rel="stylesheet" href="web.css">
-<link rel="stylesheet" href="mobile.css">
-<link rel="stylesheet" href="_shared.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 1. TITLE TAG: More descriptive and includes relevant keywords -->
+    <title>About Us | Unity Elites Web Design &amp; Development Agency</title>
+
+    <!-- 2. META DESCRIPTION: Clear, concise, and highlights key differentiators -->
+    <meta name="description" content="Unity Elites is a web development agency building responsive websites, e-commerce stores, and custom web tools. Learn about our performance-first approach and why clients choose us.">
+
+    <!-- 3. CANONICAL TAG: Prevents duplicate content issues -->
+    <link rel="canonical" href="https://unityelites.com/about.html">
+
+    <!-- 4. ROBOTS META TAG: Explicitly allows indexing and following links -->
+    <meta name="robots" content="index, follow">
+
+    <!-- 5. OPEN GRAPH (OG) TAGS: Enhances social media sharing -->
+    <meta property="og:title" content="About Us | Unity Elites Web Design &amp; Development Agency">
+    <meta property="og:description" content="Meet the team behind Unity Elites and see how we approach web design, performance, security, and SEO.">
+    <meta property="og:url" content="https://unityelites.com/about.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://unityelites.com/img/logo.jpg">
+    <meta property="og:image:alt" content="Unity Elites Logo - Web Design and Development Agency">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- 6. TWITTER CARDS: Optimizes sharing on Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Us | Unity Elites Web Design &amp; Development Agency">
+    <meta name="twitter:description" content="Unity Elites builds responsive websites, e-commerce stores, and custom web tools with a performance-first approach.">
+    <meta name="twitter:image" content="https://unityelites.com/img/logo.jpg">
+
+    <!-- 7. FAVICONS & THEME COLOR: Good for user experience and branding -->
+    <link rel="icon" href="img/favicon.ico" sizes="any">
+    <link rel="icon" href="img/logo32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="img/logo192.png" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="img/logo180.png">
+    <meta name="theme-color" content="#131719">
+
+    <!-- 8. CSS: Keep it minimal for speed -->
+    <link rel="stylesheet" href="web.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="_shared.css">
+
+    <!-- 9. JSON-LD: STRUCTURED DATA (The game-changer for "best" SEO) -->
+    <!-- AboutPage schema for better search results -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "About Us",
+            "description": "Unity Elites is a web development agency building responsive websites, e-commerce stores, and custom web tools.",
+            "url": "https://unityelites.com/about.html",
+            "inLanguage": "en",
+            "isPartOf": {
+                "@type": "WebSite",
+                "name": "Unity Elites",
+                "url": "https://unityelites.com/"
+            }
+        }
+    </script>
+    <!-- BreadcrumbList structured data for better search result snippets -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://unityelites.com/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "About Us",
+                    "item": "https://unityelites.com/about.html"
+                }
+            ]
+        }
+    </script>
+    <!-- Organization schema for rich snippets and Knowledge Panel -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Unity Elites",
+            "url": "https://unityelites.com",
+            "logo": "https://unityelites.com/img/logo192.png",
+            "description": "Web design and development agency building responsive websites, e-commerce stores, and custom web tools.",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "info@unityelites.com",
+                "contactType": "customer service",
+                "availableLanguage": ["English"]
+            },
+            "sameAs": [
+                "http://t.me/ue_pasco_bot/ue_pasco",
+                "https://github.com/benasdom"
+            ]
+        }
+    </script>
+    <!-- FAQ schema for common questions about the agency -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "What services does Unity Elites offer?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Unity Elites offers web design, front-end and back-end development, e-commerce setup, custom web applications, and hosting-related support using Python, JavaScript, SQL, React, React Native, Django, and Laravel."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What is Unity Elites' approach to web development?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Unity Elites takes a performance-first, security-conscious approach. We focus on loading speed, efficient rendering, SSL/TLS security, and practical tools that solve real problems."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "What technologies does Unity Elites use?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Our stack spans Python, JavaScript, SQL, React, React Native, Django, and Laravel. We handle front-end, back-end, cloud hosting, email routing, and DNS management for client projects."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "How can I start a project with Unity Elites?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "You can start a project with Unity Elites by visiting our client intake form at benasdom.github.io/ue-clientInputs/ or by emailing us at info@unityelites.com."
+                    }
+                }
+            ]
+        }
+    </script>
+    <!-- Profile schema for the agency/team -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            "name": "About Unity Elites",
+            "description": "Meet the team behind Unity Elites and see how we approach web design, performance, and security.",
+            "mainEntity": {
+                "@type": "Organization",
+                "name": "Unity Elites",
+                "description": "A small web development team focused on building responsive, professional websites and web tools."
+            }
+        }
+    </script>
 </head>
 <body>
-<div class="ue-legal-wrap">
-  <a class="ue-legal-back" href="index.html">&larr; Back to Unity Elites</a>
-  <h1>About Unity Elites</h1>
-  <p class="ue-legal-updated">Who we are and what we build</p>
+    <!-- 10. Use semantic HTML5 elements for better structure -->
+    <main class="ue-legal-wrap">
+        <!-- 11. Improved Internal Linking: Descriptive anchor text -->
+        <nav aria-label="Breadcrumb">
+            <a class="ue-legal-back" href="index.html" aria-label="Return to the Unity Elites homepage">
+                &larr; Back to Unity Elites Homepage
+            </a>
+        </nav>
 
-  <p>Unity Elites is a small web development team focused on building responsive, professional websites and web tools — from front-end design through to hosting and deployment. We work across e-commerce builds, custom web applications, and supporting tools like our documentation hub and past-questions platform.</p>
+        <h1>About Unity Elites</h1>
+        <p class="ue-legal-updated">Who we are and what we build</p>
 
-  <div class="ue-team-card">
-    <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/>
-      <path d="M8 15c.8-1.6 2.2-2.4 4-2.4s3.2.8 4 2.4M9.5 9.5h.01M14.5 9.5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-    </svg>
-    <div>
-      <p style="margin:0 0 6px; color:#fff; font-weight:600;">What we do</p>
-      <p style="margin:0;">We design and build responsive, interactive websites with a focus on clean UI/UX, solid performance, and good SEO fundamentals. Our stack spans Python, JavaScript, SQL, React, React Native, Django, and Laravel, and we handle front-end, back-end, cloud hosting, email routing, and DNS management for client projects.</p>
-    </div>
-  </div>
+        <!-- 12. Introduction section -->
+        <section aria-labelledby="intro-heading">
+            <h2 id="intro-heading" class="visually-hidden">Introduction to Unity Elites</h2>
+            <p>
+                Unity Elites is a small web development team focused on building responsive, professional websites 
+                and web tools — from front-end design through to hosting and deployment. We work across e-commerce 
+                builds, custom web applications, and supporting tools like our documentation hub and past-questions 
+                platform.
+            </p>
+        </section>
 
-  <h2>Our Approach</h2>
-  <ul>
-    <li><strong>Performance-first</strong> — we care about loading speed, efficient rendering, and clean error handling.</li>
-    <li><strong>Security-conscious</strong> — SSL/TLS and secure defaults on everything we ship.</li>
-    <li><strong>Practical tools</strong> — beyond client sites, we build and maintain our own tools (documentation, past-questions resources, and a learning bot) that we make freely available.</li>
-  </ul>
+        <!-- 13. Team/What we do section with improved structure -->
+        <section aria-labelledby="what-we-do-heading">
+            <h2 id="what-we-do-heading" class="visually-hidden">What We Do</h2>
+            <div class="ue-team-card">
+                <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/>
+                    <path d="M8 15c.8-1.6 2.2-2.4 4-2.4s3.2.8 4 2.4M9.5 9.5h.01M14.5 9.5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <div>
+                    <p style="margin:0 0 6px; color:#fff; font-weight:600;">What we do</p>
+                    <p style="margin:0;">
+                        We design and build responsive, interactive websites with a focus on clean UI/UX, solid 
+                        performance, and good SEO fundamentals. Our stack spans Python, JavaScript, SQL, React, 
+                        React Native, Django, and Laravel, and we handle front-end, back-end, cloud hosting, 
+                        email routing, and DNS management for client projects.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-  <h2>Why This Site Exists</h2>
-  <p>This site is both our portfolio and our starting point for client projects. If you need a website built, our <a class="inline-link" href="https://benasdom.github.io/ue-clientInputs/" target="_blank" rel="noopener">client intake form</a> is the fastest way to reach us with your requirements.</p>
+        <!-- 14. Our Approach section with clear structure -->
+        <section aria-labelledby="approach-heading">
+            <h2 id="approach-heading">Our Approach</h2>
+            <ul>
+                <li>
+                    <strong>Performance-first</strong> — we care about loading speed, efficient rendering, 
+                    and clean error handling.
+                </li>
+                <li>
+                    <strong>Security-conscious</strong> — SSL/TLS and secure defaults on everything we ship.
+                </li>
+                <li>
+                    <strong>Practical tools</strong> — beyond client sites, we build and maintain our own 
+                    tools (documentation, past-questions resources, and a learning bot) that we make freely 
+                    available.
+                </li>
+            </ul>
+        </section>
 
-  <h2>Get in Touch</h2>
-  <div class="ue-contact-box">
-    <p style="margin:0 0 6px;">Have a project in mind, or just want to ask a question?</p>
-    <p style="margin:0;"><a class="inline-link" href="contact.html">Visit our Contact page</a> or email us directly at <a class="inline-link" href="mailto:info@unityelites.com">info@unityelites.com</a>.</p>
-  </div>
-</div>
+        <!-- 15. Why This Site Exists section -->
+        <section aria-labelledby="why-exists-heading">
+            <h2 id="why-exists-heading">Why This Site Exists</h2>
+            <p>
+                This site is both our portfolio and our starting point for client projects. If you need a 
+                website built, our 
+                <a class="inline-link" href="https://benasdom.github.io/ue-clientInputs/" target="_blank" rel="noopener noreferrer">
+                    client intake form
+                </a> 
+                is the fastest way to reach us with your requirements.
+            </p>
+        </section>
+
+        <!-- 16. Technologies we use section (NEW) -->
+        <section aria-labelledby="tech-heading">
+            <h2 id="tech-heading">Technologies We Use</h2>
+            <ul>
+                <li><strong>Front-End:</strong> HTML5, CSS3, JavaScript, React, React Native</li>
+                <li><strong>Back-End:</strong> Python, Django, Laravel, PHP</li>
+                <li><strong>Databases:</strong> SQL, MySQL, PostgreSQL</li>
+                <li><strong>Hosting &amp; Infrastructure:</strong> Cloud hosting, DNS management, SSL/TLS</li>
+                <li><strong>Tools:</strong> Git, GitHub, VS Code, Figma</li>
+            </ul>
+        </section>
+
+        <!-- 17. Get in Touch section with improved structure -->
+        <section aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Get in Touch</h2>
+            <div class="ue-contact-box">
+                <p style="margin:0 0 6px;">Have a project in mind, or just want to ask a question?</p>
+                <p style="margin:0;">
+                    <a class="inline-link" href="contact.html">Visit our Contact page</a> 
+                    or email us directly at 
+                    <a class="inline-link" href="mailto:info@unityelites.com?subject=Question%20about%20Unity%20Elites%20services">
+                        info@unityelites.com
+                    </a>.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript: Keep it simple and fast -->
+    <script>
+        // Update the date dynamically if needed
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add dynamic content here if needed
+            console.log('About page loaded successfully');
+        });
+    </script>
 </body>
 </html>
