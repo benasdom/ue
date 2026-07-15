@@ -540,6 +540,7 @@ animation:fades ease-in;
     background-clip: text;
     transform:scale(0.4) translateY(100%) rotateY(90deg);
     animation:fades ease-in;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
     animation-timeline: view(0% 10%);
 }
 
